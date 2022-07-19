@@ -69,3 +69,8 @@
   - Create test server
   - Make sure test server listens during all tests
     - reset after each test
+
+## JEST Matcher tip
+
+- toBe() is intended to be used by strings and numbers
+- use toEqual() to match for objects and arrays
