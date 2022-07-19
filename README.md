@@ -1,70 +1,71 @@
-# Getting Started with Create React App
+# Ice Cream on Demand
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- Practicing react testing with jest
 
-## Available Scripts
+## Screen Query Methods
 
-In the project directory, you can run:
+- command[All]ByQueryType
 
-### `npm start`
+### Command:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- get: expect element to be in the DOM
+- query: expect element not to be in the DOM
+- find: expect element to appear async
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### [All]
 
-### `npm test`
+- (exclude) expect only one match
+- (include) expect more than one match
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### QueryType
 
-### `npm run build`
+- Role (most preferred)
+- AltText (images)
+- Text (display elements)
+- Form elements
+  - PlaceholderText
+  - LabelText
+  - DisplayValue
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### References
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- https://testing-library.com/docs/dom-testing-library/api-queries
+- https://testing-library.com/docs/react-testing-library/cheatsheet
+- https://testing-library.com/docs/guide-which-query
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## not wrapped in act(...) warning
 
-### `npm run eject`
+- React updated element after test was finished
+- It means some async update occured
+- Dont want to follow the advice to wrap in act(...)
+  - Testing Library already advises against it
+  - https://testing-library.com/docs/preact-testing-library/api/#act
+- To remedy this error:
+  - Determine what changes after the test is over
+  - Account for changes in test by
+    - awaiting the change
+    - and asserting on it
+    - https://kentcdodds.com/blog/fix-the-not-wrapped-in-act-warning
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## SummaryForm Review
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- testing flow where checkbox controls whether button is disabled
+- mouseover for terms and conditions
+  - userEvent.hover() and userEvent.unhover() methods
+  - queryByText to and expect().not.toBeInTheDocument() for elements starting out not on a page
+  - async waitForElementToBeRemoved() for element that was there and then disappeared
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Mock Service Worker
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Purpose:
+  - intercept network calls
+  - return specified responses
+- Prevents network calls during test
+- Set up test conditions using server response
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Setup:
+  - npm install msw
+  - Create handler
+  - Create test server
+  - Make sure test server listens during all tests
+    - reset after each test
