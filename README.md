@@ -74,3 +74,14 @@
 
 - toBe() is intended to be used by strings and numbers
 - use toEqual() to match for objects and arrays
+
+### Review of Scoop Options testing
+
+- Mock Service Worker mimics response from server
+  - created a handler
+  - created a test server
+  - updated setupTests to listen for requests
+- getAllByRole
+  - didnt work because images were getting populated asynchronously from axios call
+- await findAllByRole
+  - used this for asynchronous DOM updates of element instead of getAllByRole
