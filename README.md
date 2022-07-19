@@ -85,3 +85,13 @@
   - didnt work because images were getting populated asynchronously from axios call
 - await findAllByRole
   - used this for asynchronous DOM updates of element instead of getAllByRole
+
+## Debugging tests tips
+
+- I can use test.only() to run only that test
+- I can use test.skip() to skip only a particular test
+
+### await waitFor()
+
+- waitFor waits for any period of time neccessary for the expectations to pass
+- this is useful for testing mock API calls that I need to wait for
