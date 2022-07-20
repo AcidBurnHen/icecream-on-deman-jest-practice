@@ -95,3 +95,14 @@
 
 - waitFor waits for any period of time neccessary for the expectations to pass
 - this is useful for testing mock API calls that I need to wait for
+
+### Review of Alert Testing
+
+- Overrode Mock Service Wrker response fo this individual test so the response throws errors
+- Had to deal with a misleading error "Unable to find role='alert'"
+- Isolating files by typing p - Jest watch mode
+
+### Creating Custom Render
+
+- Creating a custom render to add a wrapper to the render so it can be re-used
+- Create a new folder test-utils
