@@ -66,7 +66,7 @@ describe('grand total', () => {
       name: /grand total: \$/i,
     });
 
-    expect(grandTotal).toHaveTextContent('0.00');
+    expect(grandTotal).toHaveTextaContent('0.00');
 
     const vanillaInput = await screen.findByRole('spinbutton', {
       name: 'Vanilla',

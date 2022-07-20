@@ -76,6 +76,17 @@
 
 - I can use test.only() to run only that test
 - I can use test.skip() to skip only a particular test
+- I can run screen.debug()
+  - prints out what the DOM looks like at that point
+
+### - Unable to find role="role"
+
+- Either role doesn't exist
+- Or no element with that role that matches the name option
+
+### Error: connect ECONNREFUSED (your local ip)
+
+- There is no mock service handler associated with this route and method
 
 ### await waitFor()
 
@@ -131,3 +142,42 @@
   - userEvent.type to enter number
 - wrapper option to render to apply context provider
 - redefining testing library render to access globally
+
+## Jest Mocks as Props
+
+- Added a prop to top level page components
+  - setOrderPhase
+- Other components also have functions as props
+  - updateItemCount for the ScoopOption and ToppingOption components
+- May need to pass as prop when rendering in tests
+  - TypeScript, PropTypes or other prop validators will require the prop to be there
+  - Or will get called in tests but doesn't matter for the test
+    - Testing that scoop count is invalid like -1 will call updateItemCount
+      because it gets updated whenever the scoop count changes, so if the props are missing
+      the tests will throw errors, but for these particular tests nothing needs to happen when
+      item count is called
+    - In such cases it is best to use a placeholder so that the test doesn't throw an error
+
+### - Solution:
+
+- Passing a jest mock function as a prop
+- jest.fn()
+  - Doesn't do anything
+  - Just a placeholder to avoid errors
+- Example:
+  ```JS
+  render(
+  <ScoopsOption
+  name="Vanilla"
+  imagePath="/images/vanilla.png"
+  updateItemCount={jest.fn()}
+  />
+  )
+  ```
+
+## Review of Order Phase Testing
+
+- Tested the whole flow of submitting the order and getting the order confirmation
+- Created new mock POST request
+- Renewed concepts from other tests and reapplied them in this test
+- Used jest.fn() to mock props

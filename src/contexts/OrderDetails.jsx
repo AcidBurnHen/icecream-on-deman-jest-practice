@@ -1,17 +1,9 @@
 import { createContext, useContext, useState, useMemo, useEffect } from 'react';
 import { pricePerItem } from '../constants';
-
-function formatCurrency(ammount) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-  }).format(ammount);
-}
+import { formatCurrency } from '../utilities';
 
 const OrderDetails = createContext();
 
-// Custom hoook to check if inside a provider
 export function useOrderDetails() {
   const context = useContext(OrderDetails);
 
@@ -38,9 +30,7 @@ export function OrderDetailsProvider(props) {
     scoops: new Map(),
     toppings: new Map(),
   });
-
   const zeroCurrency = formatCurrency(0);
-
   const [totals, setTotals] = useState({
     scoops: zeroCurrency,
     toppings: zeroCurrency,
@@ -49,11 +39,11 @@ export function OrderDetailsProvider(props) {
 
   useEffect(() => {
     const scoopsSubtotal = calculateSubtotal('scoops', optionCounts);
-    const toppingSubtotal = calculateSubtotal('toppings', optionCounts);
-    const grandTotal = scoopsSubtotal + toppingSubtotal;
+    const toppingsSubtotal = calculateSubtotal('toppings', optionCounts);
+    const grandTotal = scoopsSubtotal + toppingsSubtotal;
     setTotals({
       scoops: formatCurrency(scoopsSubtotal),
-      toppings: formatCurrency(toppingSubtotal),
+      toppings: formatCurrency(toppingsSubtotal),
       grandTotal: formatCurrency(grandTotal),
     });
   }, [optionCounts]);
@@ -68,7 +58,14 @@ export function OrderDetailsProvider(props) {
       setOptionCounts(newOptionCounts);
     }
 
-    return [{ ...optionCounts, totals }, updateItemCount];
+    function resetOrder() {
+      setOptionCounts({
+        scoops: new Map(),
+        toppings: new Map(),
+      });
+    }
+
+    return [{ ...optionCounts, totals }, updateItemCount, resetOrder];
   }, [optionCounts, totals]);
   return <OrderDetails.Provider value={value} {...props} />;
 }
