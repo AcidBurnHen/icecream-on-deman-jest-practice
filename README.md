@@ -102,7 +102,14 @@
 - Had to deal with a misleading error "Unable to find role='alert'"
 - Isolating files by typing p - Jest watch mode
 
-### Creating Custom Render
+### Review Of Scoops Subtotal Test
 
-- Creating a custom render to add a wrapper to the render so it can be re-used
-- Create a new folder test-utils
+- getByText to find total
+  - exact option set to false to match for partial string
+- number inputs
+  - await and findBy (coming from server async)
+  - spinbutton role
+  - userEvent.clear to clear existing text
+  - userEvent.type to enter number
+- wrapper option to render to apply context provider
+- redefining testing library render to access globally
