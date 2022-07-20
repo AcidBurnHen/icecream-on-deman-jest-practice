@@ -8,7 +8,6 @@ export default function SummaryForm() {
 
   const popover = (
     <Popover id='popover-basic'>
-      <Popover.Header as='h3'>Popover right</Popover.Header>
       <Popover.Body>No ice cream will actually be delivered</Popover.Body>
     </Popover>
   );
@@ -17,7 +16,7 @@ export default function SummaryForm() {
     <span>
       I agree to
       <OverlayTrigger placement='right' overlay={popover}>
-        <Button variant='success'>Click me to see</Button>
+        <Button variant='success'>these</Button>
       </OverlayTrigger>
       <span style={{ color: 'blue' }}> Terms and Conditions</span>
     </span>

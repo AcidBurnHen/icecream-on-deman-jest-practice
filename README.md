@@ -33,20 +33,6 @@
 - https://testing-library.com/docs/react-testing-library/cheatsheet
 - https://testing-library.com/docs/guide-which-query
 
-## not wrapped in act(...) warning
-
-- React updated element after test was finished
-- It means some async update occured
-- Dont want to follow the advice to wrap in act(...)
-  - Testing Library already advises against it
-  - https://testing-library.com/docs/preact-testing-library/api/#act
-- To remedy this error:
-  - Determine what changes after the test is over
-  - Account for changes in test by
-    - awaiting the change
-    - and asserting on it
-    - https://kentcdodds.com/blog/fix-the-not-wrapped-in-act-warning
-
 ## SummaryForm Review
 
 - testing flow where checkbox controls whether button is disabled
@@ -75,7 +61,7 @@
 - toBe() is intended to be used by strings and numbers
 - use toEqual() to match for objects and arrays
 
-### Review of Scoop Options testing
+## Review of Scoop Options testing
 
 - Mock Service Worker mimics response from server
   - created a handler
@@ -96,13 +82,45 @@
 - waitFor waits for any period of time neccessary for the expectations to pass
 - this is useful for testing mock API calls that I need to wait for
 
-### Review of Alert Testing
+### not wrapped in act(...) warning
+
+- React updated element after test was finished
+- It means some async update occured
+- Dont want to follow the advice to wrap in act(...)
+  - Testing Library already advises against it
+  - https://testing-library.com/docs/preact-testing-library/api/#act
+- To remedy this error:
+  - Determine what changes after the test is over
+  - Account for changes in test by
+    - awaiting the change
+    - and asserting on it
+    - https://kentcdodds.com/blog/fix-the-not-wrapped-in-act-warning
+
+### Unmounted component error
+
+- Often appears for similar reasons as not wrapped in act(...)
+  - Component most likely has async updates after the test finished
+- Sometimes the test does not neccessarily need the async updates to complete, like testing initial conditions
+- To remedy such a use case in this error:
+  - Skip auto cleanup
+    - https://testing-library.com/docs/react-testing-library/setup/#skipping-auto-cleanup
+    - Not possible on a test-by-test basis, so this option is not the recommended way
+  - Mock useEffect to bypass server call
+    - Not recommended, farther from production code path
+  - Include in the beggining of a test that asserts on state change
+    - One that awaits state change
+      - happens on axios(api call) promise resolution
+    - Don't need to include in all tests because it only needs to be tested for particular use cases
+  - Add awaits to the end of the test to avoid errors
+    - One of least problematic solutions but considered bad practice
+
+## Review of Alert Testing
 
 - Overrode Mock Service Wrker response fo this individual test so the response throws errors
 - Had to deal with a misleading error "Unable to find role='alert'"
 - Isolating files by typing p - Jest watch mode
 
-### Review Of Scoops Subtotal Test
+## Review Of Scoops Subtotal Test
 
 - getByText to find total
   - exact option set to false to match for partial string
