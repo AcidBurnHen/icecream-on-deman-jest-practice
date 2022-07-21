@@ -181,3 +181,26 @@
 - Created new mock POST request
 - Renewed concepts from other tests and reapplied them in this test
 - Used jest.fn() to mock props
+
+## Review Later
+
+- https://kentcdodds.com/blog/common-mistakes-with-react-testing-library
+- https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#not-using-screen
+
+## Standard Questions to Ask Yourself Before Writing a New Test
+
+- What to render?
+  - What's the smallest component that encompasses tests?
+- Do I need to pass any props?
+- Do I need to wrap in some ContextProvider?
+  - Does the provider get used?
+  - Is it already wrapped within the component?
+- Where should the tests go?
+  - Which file?
+  - Is a new file needed?
+- What to test?
+  - What's the behavior that needs testing
+- How to test?
+  - What querries and events to intercat with the component?
+- Do I need to await?
+  - Is there anything async going on in the component?
